@@ -14,25 +14,65 @@
 </head>
 <body>
 <div class="container-fluid p-0">
-    <div class="d-flex flex-md-row p-3 px-md-4 mb-3 bg-white border-bottom box-shadow justify-content-md-between align-items-center" style="padding: 0 100px;">
-        <h1 class="mr-md-auto p-2">Деканат</h1>
+    <div class="d-flex flex-md-row p-3 px-md-4 mb-3 bg-white border-bottom box-shadow justify-content-md-between align-items-center">
+        <h1 class="mr-md-auto p-2" style="margin-left: 100px;"><a class="text-decoration-none"
+                                                                  href="/praktika/">Деканат</a></h1>
         <?php
         if (!app()->auth::check()):
             ?>
-            <a class="btn btn-primary" href="<?= app()->route->getUrl('/login') ?>">Вход</a>
+            <a style="margin-right: 100px;" class="btn btn-lg btn-primary" href="<?= app()->route->getUrl('/login') ?>">Вход</a>
         <?php
         else:
             ?>
             <div class="dropdown text-end">
-                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <?= app()->auth::user()->name ?>
+                <a style="margin-right: 100px;" href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Админ
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li><a class="dropdown-item" href="/praktika/users_add">Добавить
+                            пользователя</a></li>
+                    <li><a class="dropdown-item" href="/praktika/disciplines_add">Добавить
+                            дисциплину</a></li>
+                    <li><a class="dropdown-item" href="/praktika/group_add">Добавить
+                            группу студентов</a></li>
+                    <li><a class="dropdown-item" href="/praktika/student_add">Добавить
+                            студента</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
+                </ul>
+            </div>
+            <div class="dropdown text-end">
+                <a style="margin-right: 100px;" href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Персонал
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                    <li><a class="dropdown-item" href="/praktika/disciplines_connect">Связать
+                            дисциплину</a></li>
+                    <li><a class="dropdown-item" href="/praktika/performance_fill">Заполнить
+                            успеваемость</a></li>
+                    <li><a class="dropdown-item" href="/praktika/curriculums_add">Учебный план</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
+                </ul>
+            </div>
+            <div class="dropdown text-end">
+                <a style="margin-right: 100px;" href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Куратор
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                    <li><a class="dropdown-item" href="/praktika/group">Группы</a></li>
+                    <li><a class="dropdown-item" href="/praktika/disciplines_list">Дисциплины</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
                 </ul>
             </div>
         <?php
@@ -40,19 +80,25 @@
         ?>
 
     </div>
+    <div class="container">
+        <main>
+            <?= $content ?? '' ?>
+        </main>
+    </div>
 
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"
+            style="margin-top: 100px; height: 200px;">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+            <h4 class="text-muted">© 2022 Dekanat</h4>
+        </div>
+    </footer>
 </div>
 
-
-<header>
-    <nav>
-        <a href="<?= app()->route->getUrl('/hello') ?>">Главная</a>
-
-    </nav>
-</header>
-<main>
-    <?= $content ?? '' ?>
-</main>
 
 </body>
 </html>
