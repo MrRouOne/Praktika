@@ -24,57 +24,72 @@
         <?php
         else:
             ?>
-            <div class="dropdown text-end">
-                <a style="margin-right: 100px;" href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Админ
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="/praktika/users_add">Добавить
-                            пользователя</a></li>
-                    <li><a class="dropdown-item" href="/praktika/disciplines_add">Добавить
-                            дисциплину</a></li>
-                    <li><a class="dropdown-item" href="/praktika/group_add">Добавить
-                            группу студентов</a></li>
-                    <li><a class="dropdown-item" href="/praktika/student_add">Добавить
-                            студента</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
-                </ul>
-            </div>
-            <div class="dropdown text-end">
-                <a style="margin-right: 100px;" href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Персонал
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="/praktika/disciplines_connect">Связать
-                            дисциплину</a></li>
-                    <li><a class="dropdown-item" href="/praktika/performance_fill">Заполнить
-                            успеваемость</a></li>
-                    <li><a class="dropdown-item" href="/praktika/curriculums_add">Учебный план</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
-                </ul>
-            </div>
-            <div class="dropdown text-end">
-                <a style="margin-right: 100px;" href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Куратор
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="/praktika/group">Группы</a></li>
-                    <li><a class="dropdown-item" href="/praktika/disciplines_list">Дисциплины</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
-                </ul>
-            </div>
+            <?php
+            if (app()->auth::checkAdmin()):
+                ?>
+                <div class="dropdown text-end">
+                    <a style="margin-right: 100px;" href="#"
+                       class="d-block link-dark text-decoration-none dropdown-toggle"
+                       id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Админ
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                        <li><a class="dropdown-item" href="/praktika/users_add">Добавить
+                                пользователя</a></li>
+                        <li><a class="dropdown-item" href="/praktika/disciplines_add">Добавить
+                                дисциплину</a></li>
+                        <li><a class="dropdown-item" href="/praktika/group_add">Добавить
+                                группу студентов</a></li>
+                        <li><a class="dropdown-item" href="/praktika/student_add">Добавить
+                                студента</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
+                    </ul>
+                </div>
+            <?php
+            elseif (app()->auth::checkPersonal()):
+                ?>
+                <div class="dropdown text-end">
+                    <a style="margin-right: 100px;" href="#"
+                       class="d-block link-dark text-decoration-none dropdown-toggle"
+                       id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Персонал
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                        <li><a class="dropdown-item" href="/praktika/disciplines_connect">Связать
+                                дисциплину</a></li>
+                        <li><a class="dropdown-item" href="/praktika/performance_fill">Заполнить
+                                успеваемость</a></li>
+                        <li><a class="dropdown-item" href="/praktika/curriculums_add">Учебный план</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
+                    </ul>
+                </div>
+            <?php
+            elseif (app()->auth::checkCurator()):
+                ?>
+                <div class="dropdown text-end">
+                    <a style="margin-right: 100px;" href="#"
+                       class="d-block link-dark text-decoration-none dropdown-toggle"
+                       id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?> Куратор
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                        <li><a class="dropdown-item" href="/praktika/group">Группы</a></li>
+                        <li><a class="dropdown-item" href="/praktika/disciplines_list">Дисциплины</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/praktika/logout">Выход</a></li>
+                    </ul>
+                </div>
+            <?php
+            endif;
+            ?>
         <?php
         endif;
         ?>

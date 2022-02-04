@@ -11,11 +11,17 @@ class User extends Model implements IdentityInterface
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = [
-        'name',
-        'login',
-        'password'
-    ];
+//    protected $fillable = [
+//        'name',
+//        'login',
+//        'password',
+//        'lastname',
+//        'patronymic',
+//        'date_birth',
+//        'sex',
+//        'role'
+//    ];
+protected $guarded = [];
 
     protected static function booted()
     {
@@ -35,6 +41,12 @@ class User extends Model implements IdentityInterface
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function
+    getRole(): int
+    {
+        return $this->role;
     }
 
     //Возврат аутентифицированного пользователя

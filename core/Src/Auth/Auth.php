@@ -3,6 +3,7 @@
 namespace Src\Auth;
 
 use Src\Session;
+use Model\Role;
 
 class Auth
 {
@@ -50,6 +51,31 @@ class Auth
         }
         return false;
     }
+
+    public static function checkAdmin(): bool
+    {
+        if (Role::where('id', self::user()['role'])->first()['code'] === 'admin') {
+            return true;
+        }
+        return false;
+    }
+
+    public static function checkPersonal(): bool
+    {
+        if (Role::where('id', self::user()['role'])->first()['code'] === 'staff') {
+            return true;
+        }
+        return false;
+    }
+
+    public static function checkCurator(): bool
+    {
+        if (Role::where('id', self::user()['role'])->first()['code'] === 'curator') {
+            return true;
+        }
+        return false;
+    }
+
 
     //Выход текущего пользователя
     public static function logout(): bool

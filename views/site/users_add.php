@@ -23,13 +23,22 @@
             <input class="form-control" type="date" name="date_birth"></div>
         <div style="margin-bottom: 30px;" class="mb3 col-8">
             <label class="form-label"><h3>Пол</h3></label>
-            <input class="form-control" type="text" name="sex"></div>
+            <select class="form-control" name="sex">
+                <option value="0">Женский</option>
+                <option value="1">Мужской</option>
+            </select>
         <div style="margin-bottom: 30px;" class="mb3 col-8">
             <label class="form-label"><h3>Адрес прописки</h3></label>
             <input class="form-control" type="text" name="address"></div>
         <div class="mb3 col-8">
             <label class="form-label"><h3>Роль</h3></label>
-            <input class="form-control" type="text" name="role">
+            <select class="form-control" name="role">
+                <?php
+                foreach ($roles as $role) {
+                    echo "<option value='$role->id'>" . $role->title . '</option>';
+                }
+                ?>
+            </select>
 
             <button style="margin-top: 50px;" class="btn btn-lg btn-primary ">Отправить</button>
         </div>

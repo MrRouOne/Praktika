@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Post;
+use Model\Role;
 use Src\View;
 use Src\Request;
 use Model\User;
@@ -60,7 +61,19 @@ class Site
 
     public function users_add(Request $request): string
     {
-        return (new View())->render('site.users_add');
+        $roles = Role::all();
+        if ($request->method === 'GET') {
+            return (new View())->render('site.users_add',['roles' => $roles]);
+        }
+
+        if ($request->method === 'POST' && User::where('login', $request->login)->first()) {
+
+            return new View('site.signup', ['message' => 'Пользователь уже существует']);
+        }
+
+        if ($request->method === 'POST' && User::create($request->all())) {
+            app()->route->redirect('/users_add');
+        }
     }
 
     public function disciplines_add(Request $request): string
@@ -78,6 +91,11 @@ class Site
         return (new View())->render('site.student_add');
     }
 
+    public function error_403(Request $request): string
+    {
+        return (new View())->render('site.error_403');
+    }
+
 
     public function hello(): string
     {
@@ -90,7 +108,7 @@ class Site
             return new View('site.signup');
         }
 
-        if($request->method === 'POST' && User::where('login', $request->login)->first()){
+        if ($request->method === 'POST' && User::where('login', $request->login)->first()) {
 
             return new View('site.signup', ['message' => 'Логин уже существует']);
         }

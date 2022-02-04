@@ -82,3 +82,34 @@
         <h5>45</h5>
     </div>
 </div>
+<div style="margin-top: 20px;" class="d-flex flex-column border-bottom">
+    <div class="d-flex justify-content-between">
+        <h5><a class="text-decoration-none" href="/praktika/performance_discipline">Информационные технологии</a></h5>
+        <h5>45</h5>
+    </div>
+</div><div style="margin-top: 20px;" class="d-flex flex-column border-bottom">
+    <div class="d-flex justify-content-between">
+        <h5><a class="text-decoration-none" href="/praktika/performance_discipline">Информационные технологии</a></h5>
+        <h5>45</h5>
+    </div>
+</div>
+<div style="margin-top: 20px;" class="d-flex flex-column border-bottom">
+    <div class="d-flex justify-content-between">
+        <h5><a class="text-decoration-none" href="/praktika/performance_discipline">Информационные технологии</a></h5>
+        <h5>45</h5>
+    </div>
+</div>
+<div style="margin-top: 20px;" class="d-flex flex-column border-bottom">
+    <div class="d-flex justify-content-between">
+        <h5><a class="text-decoration-none" href="/praktika/performance_discipline">Информационные технологии</a></h5>
+        <h5>45</h5>
+    </div>
+</div>
+<div style="margin-top: 20px;" class="d-flex flex-column border-bottom">
+    <div class="d-flex justify-content-between">
+        <h5><a class="text-decoration-none" href="/praktika/performance_discipline">Информационные технологии</a></h5>
+        <h5>45</h5>
+    </div>
+</div>
+
+
