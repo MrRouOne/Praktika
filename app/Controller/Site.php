@@ -5,9 +5,12 @@ namespace Controller;
 use Model\Post;
 use Model\Role;
 use Src\View;
+use Src\Settings;
 use Src\Request;
 use Model\User;
 use Src\Auth\Auth;
+use Src\Validator\Validator;
+
 
 
 class Site
@@ -102,21 +105,47 @@ class Site
         return new View('site.hello', ['message' => 'hello working']);
     }
 
+//    public function signup(Request $request): string
+//    {
+//        if ($request->method === 'GET') {
+//            return new View('site.signup');
+//        }
+//
+//        if ($request->method === 'POST' && User::where('login', $request->login)->first()) {
+//
+//            return new View('site.signup', ['message' => 'Логин уже существует']);
+//        }
+//
+//        if ($request->method === 'POST' && User::create($request->all())) {
+//            app()->route->redirect('/login');
+//        }
+//    }
+
     public function signup(Request $request): string
     {
-        if ($request->method === 'GET') {
-            return new View('site.signup');
-        }
+        if ($request->method === 'POST') {
 
-        if ($request->method === 'POST' && User::where('login', $request->login)->first()) {
+            $validator = new Validator($request->all(), [
+                'name' => ['required'],
+                'login' => ['required', 'unique:users,login'],
+                'password' => ['required']
+            ], [
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально'
+            ]);
 
-            return new View('site.signup', ['message' => 'Логин уже существует']);
-        }
+            if($validator->fails()){
+                return new View('site.signup',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+            }
 
-        if ($request->method === 'POST' && User::create($request->all())) {
-            app()->route->redirect('/login');
+            if (User::create($request->all())) {
+                app()->route->redirect('/login');
+            }
         }
+        return new View('site.signup');
     }
+
 
     public function login(Request $request): string
     {
