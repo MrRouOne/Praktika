@@ -21,7 +21,7 @@ class User extends Model implements IdentityInterface
 //        'sex',
 //        'role'
 //    ];
-protected $guarded = [];
+    protected $guarded = [];
 
     protected static function booted()
     {

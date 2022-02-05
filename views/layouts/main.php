@@ -13,12 +13,10 @@
     <title>Pop it MVC</title>
 </head>
 <body>
-<?php  global $app;
-$root = $app->settings->getRootPath();?>
 <div class="container-fluid p-0">
     <div class="d-flex flex-md-row p-3 px-md-4 mb-3 bg-white border-bottom box-shadow justify-content-md-between align-items-center">
         <h1 class="mr-md-auto p-2" style="margin-left: 100px;"><a class="text-decoration-none"
-                                                                  href="<?php echo($root); ?>">Деканат</a></h1>
+                                                                  href="<?= app()->route->getUrl('/') ?>">Деканат</a></h1>
         <?php
         if (!app()->auth::check()):
             ?>
@@ -36,18 +34,18 @@ $root = $app->settings->getRootPath();?>
                         <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/users_add">Добавить
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/users_add') ?>">Добавить
                                 пользователя</a></li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/disciplines_add">Добавить
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/disciplines_add') ?>">Добавить
                                 дисциплину</a></li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/group_add">Добавить
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/group_add') ?>">Добавить
                                 группу студентов</a></li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/student_add">Добавить
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/student_add') ?>">Добавить
                                 студента</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/logout">Выход</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/logout') ?>">Выход</a></li>
                     </ul>
                 </div>
             <?php
@@ -60,15 +58,15 @@ $root = $app->settings->getRootPath();?>
                         <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/disciplines_connect">Связать
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/disciplines_connect') ?>">Связать
                                 дисциплину</a></li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/performance_fill">Заполнить
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/performance_fill') ?>">Заполнить
                                 успеваемость</a></li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/curriculums_add">Учебный план</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/curriculums_add') ?>">Учебный план</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/logout">Выход</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/logout') ?>">Выход</a></li>
                     </ul>
                 </div>
             <?php
@@ -81,12 +79,12 @@ $root = $app->settings->getRootPath();?>
                         <?= app()->auth::user()->name; ?>  <?= app()->auth::user()->lastname; ?>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/group">Группы</a></li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/disciplines_list">Дисциплины</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/group') ?>">Группы</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/disciplines_list') ?>">Дисциплины</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="<?php echo($root); ?>/logout">Выход</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/logout') ?>">Выход</a></li>
                     </ul>
                 </div>
             <?php

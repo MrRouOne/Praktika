@@ -2,7 +2,7 @@
 return [
     'driver' => 'mysql',
     'host' => 'localhost',
-    'database' => 'test',
+    'database' => 'mvc',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',

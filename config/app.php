@@ -21,6 +21,9 @@ return [
     // Классы с валидацией
     'validators' => [
         'required' => \Validators\RequireValidator::class,
-        'unique' => \Validators\UniqueValidator::class
+        'unique' => \Validators\UniqueValidator::class,
+        'english' => \Validators\EnglishValidator::class,
+        'russian' => \Validators\RussianValidator::class,
+        'integer' => \Validators\IntValidator::class,
     ]
 ];

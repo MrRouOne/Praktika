@@ -8,6 +8,7 @@ use Src\View;
 use Src\Settings;
 use Src\Request;
 use Model\User;
+use Model\Discipline_title;
 use Src\Auth\Auth;
 use Src\Validator\Validator;
 
@@ -64,29 +65,101 @@ class Site
 
     public function users_add(Request $request): string
     {
+        if (!isset($request->all()['role'])){
+            $request->set('role', '');
+        }
+
         $roles = Role::all();
         if ($request->method === 'GET') {
             return (new View())->render('site.users_add',['roles' => $roles]);
         }
 
-        if ($request->method === 'POST' && User::where('login', $request->login)->first()) {
+        if ($request->method === 'POST') {
+            $validator = new Validator($request->all(), [
+                'login' => ['required', 'unique:users,login','english'],
+                'password' => ['required','english'],
+                'name' => ['required','russian'],
+                'lastname' => ['required','russian'],
+                'patronymic' => ['russian'],
+                'sex' => ['integer'],
+                'role' => ['required','integer'],
+            ], [
+                'integer' => 'Поле :field должно быть цифрой',
+                'russian' => 'Поле :field должно содержать только кириллицу',
+                'english' => 'Поле :field должно содержать только латинские символы и цифры',
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально'
+            ]);
+            if($validator->fails()){
+                $roles = Role::all();
+                return new View('site.users_add',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE),'roles' => $roles]);
+            }
 
-            return new View('site.signup', ['message' => 'Пользователь уже существует']);
+            if (User::create($request->except(['csrf_token']))) {
+                return new View('site.users_add',
+                    ['message' => "<p style='color: green'>Пользователь успешно добавлен!</p>"]);
+            }
         }
-
-        if ($request->method === 'POST' && User::create($request->all())) {
-            app()->route->redirect('/users_add');
-        }
+        return new View('site.users_add');
     }
 
     public function disciplines_add(Request $request): string
     {
-        return (new View())->render('site.disciplines_add');
+        if ($request->method === 'POST') {
+            $validator = new Validator($request->all(), [
+                'title' => ['required', 'unique:discipline_titles,title',],
+            ], [
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально'
+            ]);
+            if($validator->fails()){
+                return new View('site.disciplines_add',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+            }
+
+            if (Discipline_title::create($request->except(['csrf_token']))) {
+                return new View('site.disciplines_add',
+                    ['message' => "<p style='color: green'>Название дисциплины успешно добавлено!</p>"]);
+            }
+        }
+        return new View('site.disciplines_add');
+
     }
 
     public function group_add(Request $request): string
     {
-        return (new View())->render('site.group_add');
+        if (!isset($request->all()['user'])){
+            $request->set('user', '');
+        }
+
+        $roles = Role::all();
+        if ($request->method === 'GET') {
+            return (new View())->render('site.users_add',['users' => $users]);
+        }
+
+        if ($request->method === 'POST') {
+            $validator = new Validator($request->all(), [
+                'title' => ['required', 'unique:discipline_titles,title',],
+                'course' => ['required', 'unique:discipline_titles,title',],
+                'semester' => ['required', 'unique:discipline_titles,title',],
+                'user' => ['required', 'unique:discipline_titles,title',],
+            ], [
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально'
+            ]);
+            if($validator->fails()){
+                return new View('site.disciplines_add',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+            }
+
+            if (Discipline_title::create($request->except(['csrf_token']))) {
+                return new View('site.disciplines_add',
+                    ['message' => "<p style='color: green'>Название дисциплины успешно добавлено!</p>"]);
+            }
+        }
+
+        return new View('site.group_add');
     }
 
     public function student_add(Request $request): string

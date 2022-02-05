@@ -32,6 +32,13 @@ class Request
         return $this->body[$field];
     }
 
+    public function except(array $arr){
+        foreach ($arr as $array){
+            unset($this->body[$array]);
+        }
+        return $this->body;
+    }
+
     public function files(): array
     {
         return $_FILES;

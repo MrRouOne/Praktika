@@ -35,6 +35,7 @@
         <div class="mb3 col-8">
             <label class="form-label"><h3>Роль</h3></label>
             <select class="form-control" name="role">
+                <option selected disabled value="">---------</option>
                 <?php
                 foreach ($roles as $role) {
                     echo "<option value='$role->id'>" . $role->title . '</option>';
