@@ -12,6 +12,6 @@ class IntValidator extends AbstractValidator
 
     public function rule(): bool
     {
-        return !is_int($this->value);
+        return preg_match('/^[0-9]+$/', $this->value);
     }
 }

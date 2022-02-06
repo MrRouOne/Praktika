@@ -6,13 +6,21 @@
         <div style="margin: 10px 0px;" class="mb3 col-8 text-danger"><h3><?= $message ?? ''; ?></h3></div>
         <div style="margin-bottom: 30px;" class="mb3 col-8">
             <label class="form-label"><h3>Группа</h3></label>
-            <input class="form-control" type="text" name="students_group"></div>
+            <select class="form-select" name="students_group">
+                <option selected disabled value="">---------</option>
+                <?php
+                foreach ($groups as $group) {
+                    echo "<option value='$group->id'>" . $group->title . '</option>';
+                }
+                ?>
+            </select>
+        </div>
         <div style="margin-bottom: 30px;" class="mb3 col-8">
             <label class="form-label"><h3>Курс</h3></label>
             <input class="form-control" type="text" name="course"></div>
-        <div class="mb3 col-8">
+        <div style="margin-bottom: 30px;" class="mb3 col-8">
             <label class="form-label"><h3>Семестр</h3></label>
-            <input class="form-control" type="text" name="semester">
+            <input class="form-control" type="text" name="semester"></div>
 
             <button style="margin-top: 50px;" class="btn btn-lg btn-primary ">Отправить</button>
         </div>

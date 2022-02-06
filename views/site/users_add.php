@@ -24,7 +24,7 @@
             <input class="form-control" type="date" name="date_birth"></div>
         <div style="margin-bottom: 30px;" class="mb3 col-8">
             <label class="form-label"><h3>Пол</h3></label>
-            <select class="form-control" name="sex">
+            <select class="form-select" name="sex">
                 <option value="0">Женский</option>
                 <option value="1">Мужской</option>
             </select>
@@ -34,7 +34,7 @@
             <input class="form-control" type="text" name="address"></div>
         <div class="mb3 col-8">
             <label class="form-label"><h3>Роль</h3></label>
-            <select class="form-control" name="role">
+            <select class="form-select" name="role">
                 <option selected disabled value="">---------</option>
                 <?php
                 foreach ($roles as $role) {

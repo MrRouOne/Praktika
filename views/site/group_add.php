@@ -15,7 +15,14 @@
             <input class="form-control" type="text" name="semester"></div>
         <div class="mb3 col-8">
             <label class="form-label"><h3>Куратор</h3></label>
-            <input class="form-control" type="text" name="user">
+            <select class="form-select" name="user">
+                <option selected disabled value="">---------</option>
+                <?php
+                foreach ($users as $user) {
+                    echo "<option value='$user->id'>" . $user->name . '</option>';
+                }
+                ?>
+            </select>
 
             <button style="margin-top: 50px;" class="btn btn-lg btn-primary ">Отправить</button>
         </div>

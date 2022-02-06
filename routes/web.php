@@ -10,6 +10,7 @@ Route::add(['GET', 'POST'], '/login', [Controller\Site::class, 'login']);
 Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
 Route::add('GET', '/group', [Controller\Site::class, 'group'])->middleware('curator');
 Route::add('GET', '/academic_performance', [Controller\Site::class, 'academic_performance'])->middleware('curator');
+Route::add(['GET', 'POST'], '/academic_performance_form', [Controller\Site::class, 'academic_performance_form'])->middleware('curator');
 Route::add('GET', '/performance_discipline', [Controller\Site::class, 'performance_discipline'])->middleware('curator');
 Route::add('GET', '/disciplines_list', [Controller\Site::class, 'disciplines_list'])->middleware('curator');
 Route::add(['GET', 'POST'], '/disciplines_connect', [Controller\Site::class, 'disciplines_connect'])->middleware('personal');

@@ -14,9 +14,4 @@ class Students_group extends Model
     protected $guarded = [];
 
 
-    //Возврат первичного ключа
-    public function getId(): int
-    {
-        return $this->id;
-    }
 }

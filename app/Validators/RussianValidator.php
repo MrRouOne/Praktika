@@ -12,7 +12,7 @@ class RussianValidator extends AbstractValidator
     public function rule(): bool
     {
         if (!empty($this->value)) {
-            return preg_match('/^[йцукенгшщзхъфывапролджэячсмитьбюёё]+$/', $this->value);
+            return preg_match('/^[йцукенгшщзхъфывапролджэячсмитьбюёЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ ]+$/', $this->value);
         }
         return true;
     }
