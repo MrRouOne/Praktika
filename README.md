@@ -5,7 +5,7 @@ install project
     clone project
     # git clone https://github.com/MrRouOne/Praktika
     cd Praktika
-    install composer
+    composer install 
     
     install requires
     # composer create-project MrRouone/Praktika:dev-master
