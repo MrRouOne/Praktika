@@ -1,5 +1,4 @@
-<h1 class="text-center" style="margin-top: 40px;">Успеваемость
-    студента <?php echo("$student->lastname $student->name"); ?></h1>
+<h1 class="text-center" style="margin-top: 40px;">Список дисциплин группы <?php echo("$group->title"); ?></h1>
 
 <form method="post">
     <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>

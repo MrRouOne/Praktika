@@ -80,7 +80,8 @@
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                         <li><a class="dropdown-item" href="<?= app()->route->getUrl('/group') ?>">Группы</a></li>
-                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/disciplines_list') ?>">Дисциплины</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/disciplines_list_form') ?>">Дисциплины</a></li>
+                        <li><a class="dropdown-item" href="<?= app()->route->getUrl('/send_report') ?>">Отправить отчёт</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

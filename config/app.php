@@ -25,5 +25,7 @@ return [
         'english' => \Validators\EnglishValidator::class,
         'russian' => \Validators\RussianValidator::class,
         'integer' => \Validators\IntValidator::class,
+        'date' => \Validators\DateValidator::class,
+        'semester' => \Validators\SemesterValidator::class,
     ]
 ];

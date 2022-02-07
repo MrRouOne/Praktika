@@ -31,6 +31,12 @@ class Settings
         return '/' . $this->path['views'] ?? '';
     }
 
+    public function getUploadPath(): string
+    {
+        return '/public/' . $this->path['upload'].'/' ?? '';
+    }
+
+
     public function getDbSetting(): array
     {
         return $this->db ?? [];

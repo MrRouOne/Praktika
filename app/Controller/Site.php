@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Educational_plan;
+use Model\Report;
 use Model\Academic_performance;
 use Model\Discipline;
 use Model\Rate;
@@ -32,11 +33,73 @@ class Site
         $group = Students_group::where('user', Auth::user()['id'])->first()['title'];
 
         if ($request->method === 'GET') {
+
+            if (!empty($request->all()['lastname'])) {
+                $students = Student::where('lastname', $request->all()['lastname'])->get();
+                return (new View())->render('site.group', ['students' => $students, 'group' => $group]);
+            }
+
+
             return (new View())->render('site.group', ['students' => $students, 'group' => $group]);
         }
 
         app()->route->redirect('/login');
         return 0;
+    }
+
+    public function send_report(Request $request): string
+    {
+        if (!isset($request->all()['educational_plan'])) {
+            $request->set('educational_plan', '');
+        }
+
+        $group = Students_group::where('user', Auth::user()['id'])->first()['id'];
+        $educational_plan = Educational_plan::where('students_group', $group)->get();
+        if ($request->method === 'GET') {
+
+            return (new View())->render('site.send_report', ['educational_plans' => $educational_plan]);
+        }
+
+        if ($request->method === 'POST') {
+            $validator = new Validator($request->all(), [
+                'educational_plan' => ['required', 'integer'],
+                'image' => ['required'],
+            ], [
+                'integer' => 'Поле :field должно быть цифрой',
+                'required' => 'Поле :field пусто',
+            ]);
+
+            if ($validator->fails()) {
+                return (new View())->render('site.send_report',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'educational_plans' => $educational_plan]);
+            }
+
+            $target_file = Report::getRootReport() . basename($_FILES["image"]["name"]);
+            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+            file_put_contents(
+        __DIR__."\\txt.txt",
+                $_FILES["image"]["tmp_name"]
+            );
+
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                $message = "The file " . basename($_FILES["imageUpload"]["image"]) . " has been uploaded.";
+            } else {
+                return (new View())->render('site.send_report',
+                    ['message' => "The file " . basename($_FILES["imageUpload"]["image"]) . " has been uploaded.", 'educational_plans' => $educational_plan]);
+            }
+
+            $image = basename($_FILES["image"]["name"], ".jpg");
+
+            if (Report::create([$request->all()['educational_plan'], $image])) {
+                return (new View())->render('site.send_report',
+                    ['message' => "<p style='color: green'>Отчёт успешно отправлен!</p>", 'educational_plans' => $educational_plan]);
+            }
+
+            return (new View())->render('site.send_report', ['educational_plans' => $educational_plan]);
+        }
+
+        return (new View())->render('site.send_report');
     }
 
     public function academic_performance_form(Request $request): string
@@ -46,8 +109,9 @@ class Site
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
                 'course' => ['required', 'integer'],
-                'semester' => ['required', 'integer'],
+                'semester' => ['required', 'integer', 'semester'],
             ], [
+                'semester' => 'Поле :field не должно быть больше 2',
                 'integer' => 'Поле :field должно быть цифрой',
                 'required' => 'Поле :field пусто',
             ]);
@@ -112,10 +176,6 @@ class Site
                 }
             }
 
-            file_put_contents(
-                __DIR__."\\txt.txt",
-                $students
-            );
 
             return (new View())->render('site.performance_discipline', ['discipline' => $discipline, 'students' => $students]);
 
@@ -126,9 +186,60 @@ class Site
 
     }
 
+    public function disciplines_list_form(Request $request): string
+    {
+        $group = Students_group::where('user', Auth::user()['id'])->first();
+
+        if ($request->method === 'POST') {
+            $validator = new Validator($request->all(), [
+                'course' => ['required', 'integer'],
+                'semester' => ['required', 'integer', 'semester'],
+            ], [
+                'semester' => 'Поле :field не должно быть больше 2',
+                'integer' => 'Поле :field должно быть цифрой',
+                'required' => 'Поле :field пусто',
+            ]);
+            if ($validator->fails()) {
+                return (new View())->render('site.disciplines_list_form',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'group' => $group]);
+            }
+
+            $course = $request->all()['course'];
+            $semester = $request->all()['semester'];
+
+            app()->route->redirect("/disciplines_list?id=$group->id&course=$course&semester=$semester");
+            return 0;
+        }
+
+        if ($request->method === 'GET') {
+            return (new View())->render('site.disciplines_list_form', ['group' => $group]);
+        }
+
+
+        app()->route->redirect('/login');
+        return 0;
+
+    }
+
     public function disciplines_list(Request $request): string
     {
-        return (new View())->render('site.disciplines_list');
+        if ($request->method === 'GET') {
+            $group = Students_group::where('id', $request->all()['id'])->first();
+            $educational_plan = Educational_plan::where(['students_group' => $group['id'],
+                'semester' => $request->all()['semester'], 'course' => $request->all()['course']])->first();
+
+            $disciplines = Discipline::where('educational_plan', $educational_plan['id'])->get();
+
+            if (!empty($disciplines[0])) {
+                return (new View())->render('site.disciplines_list', ['group' => $group, 'disciplines' => $disciplines]);
+            }
+            app()->route->redirect("/disciplines_list_form?message=Некорректные данные");
+            return 0;
+        }
+
+
+        app()->route->redirect('/login');
+        return 0;
     }
 
     # Персонал
@@ -259,8 +370,9 @@ class Site
             $validator = new Validator($request->all(), [
                 'students_group' => ['required', 'integer'],
                 'course' => ['required', 'integer'],
-                'semester' => ['required', 'integer'],
+                'semester' => ['required', 'integer', 'semester'],
             ], [
+                'semester' => 'Поле :field не должно быть больше 2',
                 'integer' => 'Поле :field должно быть цифрой',
                 'required' => 'Поле :field пусто',
             ]);
@@ -300,9 +412,11 @@ class Site
                 'name' => ['required', 'russian'],
                 'lastname' => ['required', 'russian'],
                 'patronymic' => ['russian'],
+                'date_birth' => ['date'],
                 'sex' => ['integer'],
                 'role' => ['required', 'integer'],
             ], [
+                'date' => 'Поле :field содержит некорректные данные для формы',
                 'integer' => 'Поле :field должно быть цифрой',
                 'russian' => 'Поле :field должно содержать только кириллицу',
                 'english' => 'Поле :field должно содержать только латинские символы и цифры',
@@ -362,9 +476,10 @@ class Site
             $validator = new Validator($request->all(), [
                 'title' => ['required', 'integer'],
                 'course' => ['required', 'integer'],
-                'semester' => ['required', 'integer'],
+                'semester' => ['required', 'integer', 'semester'],
                 'user' => ['required', 'unique:students_groups,user', 'integer'],
             ], [
+                'semester' => 'Поле :field не должно быть больше 2',
                 'integer' => 'Поле :field должно быть цифрой',
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
@@ -402,10 +517,11 @@ class Site
                 'lastname' => ['required', 'russian'],
                 'patronymic' => ['russian'],
                 'sex' => ['integer'],
-                'date_birth' => ['required'],
+                'date_birth' => ['required', 'date'],
                 'address' => ['required',],
                 'students_group' => ['required', 'integer'],
             ], [
+                'date' => 'Поле :field содержит некорректные данные для формы',
                 'integer' => 'Поле :field должно быть цифрой',
                 'russian' => 'Поле :field должно содержать только кириллицу',
                 'required' => 'Поле :field пусто',

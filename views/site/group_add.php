@@ -19,7 +19,7 @@
                 <option selected disabled value="">---------</option>
                 <?php
                 foreach ($users as $user) {
-                    echo "<option value='$user->id'>" . $user->name . '</option>';
+                    echo "<option value='$user->id'>" . $user->name . " " . $user->lastname . '</option>';
                 }
                 ?>
             </select>
