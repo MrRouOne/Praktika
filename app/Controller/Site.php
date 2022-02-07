@@ -74,29 +74,25 @@ class Site
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'educational_plans' => $educational_plan]);
             }
 
-            $target_file = Report::getRootReport() . basename($_FILES["image"]["name"]);
-            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+            $absolute_root = Report::getAbsoluteRoot() . $_FILES['image']['name'];
 
-            file_put_contents(
-        __DIR__."\\txt.txt",
-                $_FILES["image"]["tmp_name"]
-            );
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $absolute_root)) {
 
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                $message = "The file " . basename($_FILES["imageUpload"]["image"]) . " has been uploaded.";
+                if (Report::create(['educational_plan' => $request->all()['educational_plan'],
+                    'image' => Report::getFileRoot() . $_FILES['image']['name']]))
+                {
+                    return (new View())->render('site.send_report',
+                        ['message' => "<p style='color: green'>Отчёт успешно отправлен!</p>",
+                            'educational_plans' => $educational_plan]);
+
+                }
+
             } else {
+
                 return (new View())->render('site.send_report',
-                    ['message' => "The file " . basename($_FILES["imageUpload"]["image"]) . " has been uploaded.", 'educational_plans' => $educational_plan]);
+                    ['message' => "Ошибка! Файл не был загружен!", 'educational_plans' => $educational_plan]);
+
             }
-
-            $image = basename($_FILES["image"]["name"], ".jpg");
-
-            if (Report::create([$request->all()['educational_plan'], $image])) {
-                return (new View())->render('site.send_report',
-                    ['message' => "<p style='color: green'>Отчёт успешно отправлен!</p>", 'educational_plans' => $educational_plan]);
-            }
-
-            return (new View())->render('site.send_report', ['educational_plans' => $educational_plan]);
         }
 
         return (new View())->render('site.send_report');

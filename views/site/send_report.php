@@ -17,7 +17,7 @@
         </div>
         <div class="mb3 col-8">
             <label class="form-label"><h3>Отчёт</h3></label>
-            <input class="form-control" type="file" name="image" id="image">
+            <input class="form-control" type="file" name="image">
 
             <button style="margin-top: 50px;" class="btn btn-lg btn-primary ">Отправить</button>
         </div>

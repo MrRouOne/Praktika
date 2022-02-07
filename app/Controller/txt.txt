@@ -1,1 +1,1 @@
-C:\xampp\tmp\php42DD.tmp
+C:\xampp\htdocs\praktika\app\Model\..\..\public\upload\window.png

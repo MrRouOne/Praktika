@@ -33,7 +33,7 @@ class Settings
 
     public function getUploadPath(): string
     {
-        return '/public/' . $this->path['upload'].'/' ?? '';
+        return $this->path['upload'].'\\' ?? '';
     }
 
 

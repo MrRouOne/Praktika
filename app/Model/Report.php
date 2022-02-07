@@ -13,7 +13,14 @@ class Report extends Model
     public $timestamps = false;
     protected $guarded = [];
 
-    public static function getRootReport(): string
+    public static function getAbsoluteRoot(): string
+    {
+        global $app;
+        return __DIR__ . "\\..\\..\\" . $app->settings->getUploadPath();
+
+    }
+
+    public static function getFileRoot(): string
     {
         global $app;
         return $app->settings->getUploadPath();
