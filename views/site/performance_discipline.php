@@ -1,7 +1,7 @@
 <?php $ai = 0; ?>
 <h1 class="text-center" style="margin-top: 40px;">Успеваемость студентов по дисциплине
-    <?php use Model\Discipline_title;
-    $name = Discipline_title::where('id', $discipline['discipline_title'])->first()['title'];
+    <?php use Model\DisciplineTitle;
+    $name = DisciplineTitle::find($discipline['discipline_title'])->title;
     echo("$name"); ?></h1>
 
 <div style="margin-top: 50px;" class="d-flex flex-column">
@@ -18,14 +18,14 @@
 <?php
 
 use Model\Rate;
-use Model\Academic_performance;
+use Model\AcademicPerformance;
 
 if (!empty($students)) {
     foreach ($students as $student) {
         $ai+=1;
         $id = $student->id;
         $url = app()->route->getUrl("/academic_performance_form?id=$id");
-        $rate = Rate::where('id', Academic_performance::where(['discipline' => $discipline->id, 'student' => $id])->first()['rate'])->first()['title'];
+        $rate = Rate::where('id', AcademicPerformance::where(['discipline' => $discipline->id, 'student' => $id])->first()['rate'])->first()['title'];
         if(!empty($rate)) {
             echo(
                 "<div style='margin-top: 20px;' class='d-flex justify-content-between border-bottom'>" .

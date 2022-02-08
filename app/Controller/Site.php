@@ -9,6 +9,13 @@ use Src\Validator\Validator;
 
 class Site
 {
+    public static function setSelect($request, string $field): void
+    {
+        if (!isset($request->all()["$field"])) {
+            $request->set("$field", '');
+        }
+    }
+
     public function index(Request $request): string
     {
         return (new View())->render('site.index');

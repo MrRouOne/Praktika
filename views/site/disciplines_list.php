@@ -9,13 +9,13 @@
 
 <?php
 
-use Model\Discipline_title;
+use Model\DisciplineTitle;
 
 if (!empty($disciplines)) {
     foreach ($disciplines as $discipline) {
         $id = $discipline->id;
         $url = app()->route->getUrl("/performance_discipline?id=$id");
-        $name = Discipline_title::where('id', $discipline->discipline_title)->first()['title'];
+        $name = DisciplineTitle::where('id', $discipline->discipline_title)->first()['title'];
         if(!empty($name)) {
             echo(
                 "<div style='margin-top: 20px;' class='d-flex flex-column border-bottom'>" .

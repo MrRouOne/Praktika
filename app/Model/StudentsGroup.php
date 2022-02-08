@@ -4,10 +4,8 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Src\Auth\IdentityInterface;
-use Src\Auth\Auth;
 
-class Students_group extends Model
+class StudentsGroup extends Model
 {
     use HasFactory;
 
@@ -22,6 +20,11 @@ class Students_group extends Model
     public function students()
     {
         return $this->hasMany(Student::class, 'students_group');
+    }
+
+    public function educationalPlans()
+    {
+        return $this->hasMany(EducationalPlan::class, 'students_group');
     }
 
 }

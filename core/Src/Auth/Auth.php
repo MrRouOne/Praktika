@@ -52,25 +52,9 @@ class Auth
         return false;
     }
 
-    public static function checkAdmin(): bool
+    public static function checkRole(string $role): bool
     {
-        if (Role::where('id', self::user()['role'])->first()['code'] === 'admin') {
-            return true;
-        }
-        return false;
-    }
-
-    public static function checkPersonal(): bool
-    {
-        if (Role::where('id', self::user()['role'])->first()['code'] === 'staff') {
-            return true;
-        }
-        return false;
-    }
-
-    public static function checkCurator(): bool
-    {
-        if (Role::where('id', self::user()['role'])->first()['code'] === 'curator') {
+        if (Role::find(self::user()['role'])->code === "$role") {
             return true;
         }
         return false;

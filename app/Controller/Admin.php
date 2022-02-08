@@ -2,10 +2,10 @@
 
 namespace Controller;
 
-use Model\Discipline_title;
+use Model\DisciplineTitle;
 use Model\Role;
 use Model\Student;
-use Model\Students_group;
+use Model\StudentsGroup;
 use Model\User;
 use Src\Request;
 use Src\Validator\Validator;
@@ -15,14 +15,8 @@ class Admin
 {
     public function users_add(Request $request): string
     {
-        if (!isset($request->all()['role'])) {
-            $request->set('role', '');
-        }
-
+        Site::setSelect($request, "role");
         $roles = Role::all();
-        if ($request->method === 'GET') {
-            return (new View())->render('site.users_add', ['roles' => $roles]);
-        }
 
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
@@ -42,6 +36,7 @@ class Admin
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
             ]);
+
             if ($validator->fails()) {
                 return (new View())->render('site.users_add',
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'roles' => $roles]);
@@ -52,7 +47,12 @@ class Admin
                     ['message' => "<p style='color: green'>Пользователь успешно добавлен!</p>", 'roles' => $roles]);
             }
         }
-        return (new View())->render('site.users_add');
+
+        if ($request->method === 'GET') {
+            return (new View())->render('site.users_add', ['roles' => $roles]);
+        }
+
+        return app()->route->redirect('/login');
     }
 
     public function disciplines_add(Request $request): string
@@ -64,31 +64,29 @@ class Admin
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
             ]);
+
             if ($validator->fails()) {
                 return (new View())->render('site.disciplines_add',
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
             }
 
-            if (Discipline_title::create($request->except(['csrf_token']))) {
+            if (DisciplineTitle::create($request->except(['csrf_token']))) {
                 return (new View())->render('site.disciplines_add',
                     ['message' => "<p style='color: green'>Название дисциплины успешно добавлено!</p>"]);
             }
         }
-        return (new View())->render('site.disciplines_add');
 
+        if ($request->method === 'GET') {
+            return (new View())->render('site.disciplines_add');
+        }
+
+        return app()->route->redirect('/login');
     }
 
     public function group_add(Request $request): string
     {
-        if (!isset($request->all()['user'])) {
-            $request->set('user', '');
-        }
-        $users = User::where('role', Role::where('code', 'curator')->first()['id'])->get();
-
-
-        if ($request->method === 'GET') {
-            return (new View())->render('site.group_add', ['users' => $users]);
-        }
+        Site::setSelect($request, "user");
+        $users = Role::where('code', 'curator')->first()->users;
 
         if ($request->method === 'POST') {
 
@@ -109,26 +107,23 @@ class Admin
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'users' => $users]);
             }
 
-            if (Students_group::create($request->except(['csrf_token']))) {
+            if (StudentsGroup::create($request->except(['csrf_token']))) {
                 return (new View())->render('site.group_add',
                     ['message' => "<p style='color: green'>Группа успешно добавлена!</p>", 'users' => $users]);
             }
         }
 
-        return (new View())->render('site.group_add');
+        if ($request->method === 'GET') {
+            return (new View())->render('site.group_add', ['users' => $users]);
+        }
+
+        return app()->route->redirect('/login');
     }
 
     public function student_add(Request $request): string
     {
-        if (!isset($request->all()['students_group'])) {
-            $request->set('students_group', '');
-        }
-        $groups = Students_group::all();
-
-
-        if ($request->method === 'GET') {
-            return (new View())->render('site.student_add', ['groups' => $groups]);
-        }
+        Site::setSelect($request, "students_group");
+        $groups = StudentsGroup::all();
 
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
@@ -146,6 +141,7 @@ class Admin
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
             ]);
+
             if ($validator->fails()) {
                 return (new View())->render('site.student_add',
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'groups' => $groups]);
@@ -156,6 +152,11 @@ class Admin
                     ['message' => "<p style='color: green'>Студент успешно добавлен!</p>", 'groups' => $groups]);
             }
         }
-        return (new View())->render('site.student_add');
+
+        if ($request->method === 'GET') {
+            return (new View())->render('site.student_add', ['groups' => $groups]);
+        }
+
+        return app()->route->redirect('/login');
     }
 }

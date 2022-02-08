@@ -1,1 +1,1 @@
-Группа - 6
+{"id":6,"title":492,"course":3,"semester":2,"user":14}

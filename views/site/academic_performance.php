@@ -20,16 +20,16 @@
 
 <?php
 
-use Model\Discipline_title;
+use Model\DisciplineTitle;
 use Model\Rate;
-use Model\Academic_performance;
+use Model\AcademicPerformance;
 
 if (!empty($disciplines)) {
     foreach ($disciplines as $discipline) {
         $id = $student->id;
         $url = app()->route->getUrl("/performance_discipline?id=$discipline->id");
-        $name = Discipline_title::where('id', $discipline['discipline_title'])->first()['title'];
-        $rate = Rate::where('id', Academic_performance::where(['discipline' => $discipline->id, 'student' => $id])->first()['rate'])->first()['title'];
+        $name = DisciplineTitle::find($discipline['discipline_title'])->title;
+        $rate = Rate::where('id', AcademicPerformance::where(['discipline' => $discipline->id, 'student' => $id])->first()['rate'])->first()['title'];
         if(!empty($name) and !empty($discipline->hours) and !empty($rate)) {
             echo(
                 "<div style='margin-top: 20px;' class='d-flex flex-column border-bottom'>" .

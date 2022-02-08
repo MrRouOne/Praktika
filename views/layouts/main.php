@@ -25,7 +25,7 @@
         else:
             ?>
             <?php
-            if (app()->auth::checkAdmin()):
+            if (app()->auth::checkRole('admin')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
@@ -49,7 +49,7 @@
                     </ul>
                 </div>
             <?php
-            elseif (app()->auth::checkPersonal()):
+            elseif (app()->auth::checkRole('staff')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
@@ -70,7 +70,7 @@
                     </ul>
                 </div>
             <?php
-            elseif (app()->auth::checkCurator()):
+            elseif (app()->auth::checkRole('curator')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"

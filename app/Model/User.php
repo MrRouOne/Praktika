@@ -44,6 +44,6 @@ class User extends Model implements IdentityInterface
 
     public function group()
     {
-        return $this->hasOne(Students_group::class, 'user');
+        return $this->hasOne(StudentsGroup::class, 'user');
     }
 }

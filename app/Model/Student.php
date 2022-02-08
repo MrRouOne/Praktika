@@ -4,7 +4,6 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Src\Auth\IdentityInterface;
 
 class Student extends Model
 {
@@ -13,9 +12,9 @@ class Student extends Model
     public $timestamps = false;
     protected $guarded = [];
 
-    public static function get(string $fieldName, string $value): string
+    public function academicPerformances()
     {
-        return Student::where($fieldName, $value)->get();
+        return $this->hasMany(AcademicPerformance::class, 'student');
     }
 
 }

@@ -13,7 +13,7 @@ class CuratorMiddleware
     public function handle(Request $request)
     {
         //Если пользователь не персонал, то редирект на страницу с ошибкой
-        if (!Auth::checkCurator()) {
+        if (!Auth::checkRole('curator')) {
             app()->route->redirect('/error_403');
         }
     }

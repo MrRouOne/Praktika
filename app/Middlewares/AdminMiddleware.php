@@ -13,7 +13,7 @@ class AdminMiddleware
     public function handle(Request $request)
     {
         //Если пользователь не админ, то редирект на страницу с ошибкой
-        if (!Auth::checkAdmin()) {
+        if (!Auth::checkRole('admin')) {
             app()->route->redirect('/error_403');
         }
     }

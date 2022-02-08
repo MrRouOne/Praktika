@@ -1,6 +1,6 @@
 <h1 class="text-center" style="margin-top: 40px;">Успеваемость студентов по дисциплине
-    <?php use Model\Discipline_title;
-    $name = Discipline_title::where('id', $discipline['discipline_title'])->first()['title'];
+    <?php use Model\DisciplineTitle;
+    $name = DisciplineTitle::find($discipline['discipline_title'])->title;
     echo("$name"); ?></h1>
 
 <form method="post">
