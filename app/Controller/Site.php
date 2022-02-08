@@ -17,7 +17,6 @@ use Model\Discipline_title;
 use Src\Auth\Auth;
 use Src\Validator\Validator;
 
-
 class Site
 {
     public function index(Request $request): string
