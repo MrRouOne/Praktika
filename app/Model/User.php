@@ -34,16 +34,16 @@ class User extends Model implements IdentityInterface
         return $this->id;
     }
 
-    public function
-    getRole(): int
-    {
-        return $this->role;
-    }
 
     //Возврат аутентифицированного пользователя
     public function attemptIdentity(array $credentials)
     {
         return self::where(['login' => $credentials['login'],
             'password' => md5($credentials['password'])])->first();
+    }
+
+    public function group()
+    {
+        return $this->hasOne(Students_group::class, 'user');
     }
 }

@@ -13,5 +13,9 @@ class Student extends Model
     public $timestamps = false;
     protected $guarded = [];
 
+    public static function get(string $fieldName, string $value): string
+    {
+        return Student::where($fieldName, $value)->get();
+    }
 
 }
