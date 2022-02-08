@@ -1,6 +1,6 @@
 {
     "name": "mrrouone/praktika",
-    "description": "Module for working with arrays",
+    "description": "Simple mvc framework",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -18,10 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Collect\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+            "Src\\": "core/Src/",
+            "": "app/"
+        }
     }
 }
