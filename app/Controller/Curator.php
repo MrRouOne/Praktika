@@ -13,6 +13,7 @@ use Src\Auth\Auth;
 use Src\Request;
 use Src\Validator\Validator;
 use Src\View;
+use function FileWork\fileWork;
 
 class Curator
 {
@@ -56,10 +57,12 @@ class Curator
                     JSON_UNESCAPED_UNICODE), 'educational_plans' => $educational_plan]);
             }
 
-            if (Report::checkUpload('image')) {
+            $path = app()->settings->getUploadPath();
+
+            if (fileWork()->checkUpload('image',$path,'out')) {
 
                 if (Report::create(['educational_plan' => $request->get('educational_plan'),
-                    'image' => Report::getFileRoot() . $_FILES['image']['name']])) {
+                    'image' =>  fileWork()->rootToUpload('image',$path,'this')])) {
                     return (new View())->render('site.send_report',
                         ['message' => "<p style='color: green'>Отчёт успешно отправлен!</p>",
                             'educational_plans' => $educational_plan]);
