@@ -16,7 +16,7 @@ class Report extends Model
     public static function getAbsoluteRoot(): string
     {
         global $app;
-        return __DIR__ . "\\..\\..\\" . $app->settings->getUploadPath();
+        return __DIR__ . "../" . $app->settings->getUploadPath() . "/";
     }
 
     public static function getFileRoot(): string

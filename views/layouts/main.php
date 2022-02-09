@@ -17,7 +17,7 @@
     <div class="d-flex flex-md-row p-3 px-md-4 mb-3 bg-white border-bottom box-shadow justify-content-md-between align-items-center">
         <h1 class="mr-md-auto p-2" style="margin-left: 100px;"><a class="text-decoration-none"
                                                                   href="<?= app()->route->getUrl('/') ?>">Деканат</a></h1>
-        <?php
+        <?php use Model\User;
         if (!app()->auth::check()):
             ?>
             <a style="margin-right: 100px;" class="btn btn-lg btn-primary" href="<?= app()->route->getUrl('/login') ?>">Вход</a>
@@ -25,7 +25,7 @@
         else:
             ?>
             <?php
-            if (app()->auth::checkRole('admin')):
+            if (User::checkRole('admin')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
@@ -49,7 +49,7 @@
                     </ul>
                 </div>
             <?php
-            elseif (app()->auth::checkRole('staff')):
+            elseif (User::checkRole('staff')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
@@ -70,7 +70,7 @@
                     </ul>
                 </div>
             <?php
-            elseif (app()->auth::checkRole('curator')):
+            elseif (User::checkRole('curator')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"

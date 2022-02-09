@@ -52,14 +52,6 @@ class Auth
         return false;
     }
 
-    public static function checkRole(string $role): bool
-    {
-        if (Role::find(self::user()['role'])->code === "$role") {
-            return true;
-        }
-        return false;
-    }
-
 
     //Выход текущего пользователя
     public static function logout(): bool

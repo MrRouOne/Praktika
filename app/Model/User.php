@@ -4,6 +4,7 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Src\Auth\Auth;
 use Src\Auth\IdentityInterface;
 
 class User extends Model implements IdentityInterface
@@ -46,4 +47,13 @@ class User extends Model implements IdentityInterface
     {
         return $this->hasOne(StudentsGroup::class, 'user');
     }
+
+    public static function checkRole(string $role): bool
+    {
+        if (Role::find(Auth::user()['role'])->code === "$role") {
+            return true;
+        }
+        return false;
+    }
+
 }

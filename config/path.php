@@ -7,5 +7,5 @@ return [
     //Настройка директории с представлениями
     'views' => 'views',
     //Настройка директории для загрузки файлов
-    'upload' => 'public\\upload'
+    'upload' => 'public/upload'
 ];
