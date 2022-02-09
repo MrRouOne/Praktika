@@ -16,7 +16,8 @@
         "illuminate/events": "10.x-dev",
         "nikic/fast-route": "2.0.x-dev",
         "mrrouone/collect": "dev-master",
-        "mrrouone/files": "dev-master"
+        "mrrouone/files": "dev-master",
+        "phpunit/phpunit": "10.0.x-dev"
     },
     "autoload": {
         "psr-4": {

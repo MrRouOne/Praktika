@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Model\User;
 use Src\View;
 use Src\Request;
 use Src\Auth\Auth;
@@ -46,6 +47,7 @@ class Site
 
             if (User::create($request->all())) {
                 app()->route->redirect('/login');
+                return false;
             }
         }
         return (new View())->render('site.signup');
