@@ -102,19 +102,18 @@
         </main>
     </div>
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"
-            style="margin-top: 100px; height: 200px;">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                <svg class="bi" width="30" height="24">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-            <h4 class="text-muted">© 2022 Dekanat</h4>
-        </div>
-    </footer>
 </div>
-
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"
+        style="margin-top: 100px; height: 200px;">
+    <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+        </a>
+        <h4 class="text-muted">© 2022 Dekanat</h4>
+    </div>
+</footer>
 
 </body>
 </html>

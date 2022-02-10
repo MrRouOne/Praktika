@@ -63,9 +63,11 @@ class Site
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
             app()->route->redirect('/');
+            return false;
         }
         //Если аутентификация не удалась, то сообщение об ошибке
         return (new View())->render('site.login', ['message' => 'Неправильные логин или пароль']);
+
     }
 
     public function logout(): void

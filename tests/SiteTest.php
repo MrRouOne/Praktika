@@ -44,6 +44,34 @@ class SiteTest extends TestCase
     }
 
 
+    /**
+     * @dataProvider additionProviderLogin
+     * @runInSeparateProcess
+     */
+    public function testLogin(string $httpMethod, array $userData, string $message): void
+    {
+        // Создаем заглушку для класса Request.
+        $request = $this->createMock(\Src\Request::class);
+        // Переопределяем метод all() и свойство method
+        $request->expects($this->any())
+            ->method('all')
+            ->willReturn($userData);
+        $request->method = $httpMethod;
+
+        //Сохраняем результат работы метода в переменную
+        $result = (new \Controller\Site())->login($request);
+
+        if (!empty($result)) {
+            //Проверяем варианты с ошибками валидации
+            $message = '/' . preg_quote($message, '/') . '/';
+            $this->expectOutputRegex($message);
+            return;
+        }
+        //Проверяем есть ли пользователь в базе данных
+        $this->assertTrue((bool)User::where('login', $userData['login'])->count());
+    }
+
+
     //Настройка конфигурации окружения
     protected function setUp(): void
     {
@@ -81,6 +109,22 @@ class SiteTest extends TestCase
             ],
             ['POST', ['name' => 'admin', 'login' => md5(time()), 'password' => 'admin'],
                 'Location: /praktika/login',
+            ],
+        ];
+    }
+
+
+    public function additionProviderLogin(): array
+    {
+        return [
+            ['GET', ['login' => '', 'password' => ''],
+                '<h3></h3>'
+            ],
+            ['POST', ['login' => '', 'password' => ''],
+                '<h3>Неправильные логин или пароль</h3>',
+            ],
+            ['POST', ['login' => md5(time()), 'password' => md5(time())],
+                '<h3>Неправильные логин или пароль</h3>',
             ],
         ];
     }
