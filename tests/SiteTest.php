@@ -26,7 +26,11 @@ class SiteTest extends TestCase
 
         //Сохраняем результат работы метода в переменную
         $result = (new \Controller\Site())->signup($request);
-
+        file_put_contents(
+            __DIR__."\\txt.txt",
+            $result,
+            FILE_APPEND
+        );
         if (!empty($result)) {
             //Проверяем варианты с ошибками валидации
             $message = '/' . preg_quote($message, '/') . '/';

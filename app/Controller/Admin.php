@@ -147,10 +147,19 @@ class Admin
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'groups' => $groups]);
             }
 
-            if (Student::create($request->except(['csrf_token']))) {
-                return (new View())->render('site.student_add',
-                    ['message' => "<p style='color: green'>Студент успешно добавлен!</p>", 'groups' => $groups]);
+            if (isset($request->all()['csrf_token'])) {
+                if (Student::create($request->except(['csrf_token']))) {
+                    return (new View())->render('site.student_add',
+                        ['message' => "<p style='color: green'>Студент успешно добавлен!</p>", 'groups' => $groups]);
+                }
+            } else {
+                if (Student::create($request->all())) {
+                     (new View())->render('site.student_add',
+                        ['message' => "<p style='color: green'>Студент успешно добавлен!</p>", 'groups' => $groups]);
+                    return false;
+                }
             }
+
         }
 
         if ($request->method === 'GET') {
