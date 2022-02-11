@@ -48,12 +48,22 @@ class User extends Model implements IdentityInterface
         return $this->hasOne(StudentsGroup::class, 'user');
     }
 
-    public static function checkRole(string $role): bool
+    public static function checkRoleCurrent(string $role): bool
     {
         if (Role::find(Auth::user()['role'])->code === "$role") {
             return true;
         }
         return false;
     }
+
+    public static function checkRole($user,string $role): bool
+    {
+        if (Role::find($user['role'])->code === "$role") {
+            return true;
+        }
+        return false;
+    }
+
+
 
 }

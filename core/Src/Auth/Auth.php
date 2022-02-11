@@ -36,6 +36,14 @@ class Auth
         return false;
     }
 
+    public static function attemptWithoutLogin(array $credentials): bool
+    {
+        if ($user = self::$user->attemptIdentity($credentials)) {
+            return true;
+        }
+        return false;
+    }
+
     //Возврат текущего аутентифицированного пользователя
     public static function user()
     {
@@ -51,13 +59,6 @@ class Auth
         }
         return false;
     }
-
-    //Проверка является ли текущий пользователь аутентифицированным
-    public static function role(): bool
-    {
-       return self::user()['role'];
-    }
-
 
     //Выход текущего пользователя
     public static function logout(): bool

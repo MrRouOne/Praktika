@@ -25,7 +25,7 @@
         else:
             ?>
             <?php
-            if (User::checkRole('admin')):
+            if (User::checkRoleCurrent('admin')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
@@ -49,7 +49,7 @@
                     </ul>
                 </div>
             <?php
-            elseif (User::checkRole('staff')):
+            elseif (User::checkRoleCurrent('staff')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
@@ -70,7 +70,7 @@
                     </ul>
                 </div>
             <?php
-            elseif (User::checkRole('curator')):
+            elseif (User::checkRoleCurrent('curator')):
                 ?>
                 <div class="dropdown text-end">
                     <a style="margin-right: 100px;" href="#"
