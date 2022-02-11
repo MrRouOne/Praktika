@@ -1,7 +1,7 @@
 <?php
 
 use Src\Route;
-
+Route::group('/web', function () {
 Route::add('GET', '/hello', [Controller\Site::class, 'hello'])
     ->middleware('auth');
 Route::add('GET', '/', [Controller\Site::class, 'index']);
@@ -35,4 +35,4 @@ Route::add(['GET', 'POST'], '/student_add', [Controller\Admin::class, 'student_a
     ->middleware('admin');
 Route::add(['GET'], '/error_403', [Controller\Site::class, 'error_403']);
 Route::add(['GET', 'POST'], '/send_report', [Controller\Curator::class, 'send_report'])
-    ->middleware('curator');
+    ->middleware('curator');});

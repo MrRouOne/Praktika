@@ -52,6 +52,12 @@ class Auth
         return false;
     }
 
+    //Проверка является ли текущий пользователь аутентифицированным
+    public static function role(): bool
+    {
+       return self::user()['role'];
+    }
+
 
     //Выход текущего пользователя
     public static function logout(): bool
